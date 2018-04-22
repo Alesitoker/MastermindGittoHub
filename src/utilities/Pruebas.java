@@ -9,48 +9,47 @@ import jugadores.Tablero.*;
 
 
 public class Pruebas {
-
 	public static void main(String[] args) {
 //		String color = "";
 //		byte opcion;
 		int i = 0, j, numero = 4, numCasillas = 9, numColores = 10;
 		boolean bebe = false;
-		String colors[] = {"R", "V", "A", "N", CELESTE, AZUL, VIOLET, MORADO} ;
+		String colors[] = {"1", "2", "3", "4", CELESTE, AZUL, VIOLET, MORADO} ;
 		Combinacion ocultacion = new Combinacion(4);
 		Combinacion bien = new Combinacion(4);
-		Casillas[] ocu, bi;
+		Casilla[] ocu, bi;
 		boolean salir = false;
 		int array[] = new int[4];
 		int negra = 0, blanca = 0;
 		HashMap<String,Integer> mapa = new HashMap<>();
 		int negras = 2, blancas = 1, contador = 0;
 		CombinacionRespuesta respuesta = new CombinacionRespuesta(4);
-				
-		for (i = 0; i < bien.getCombinacion().length; i++) {
-			ocultacion.addFicha(colors[i], i);
+		
+		for (i = 0; i < ocultacion.getCombinacion().length; i++) {
+			bien.addFicha(colors[i], i);
 			if (i == 0)
-			bien.addFicha("N", i);
+				ocultacion.addFicha("2", i);
 			if (i == 1) 
-			bien.addFicha("R", i);
+				ocultacion.addFicha("1", i);
 			if (i == 2)
-				bien.addFicha("N", i);
+				ocultacion.addFicha("3", i);
 			else if (i == 3)
-				bien.addFicha("N", i);
+				ocultacion.addFicha("1", i);
 		}
 		
 		ocu = ocultacion.getCombinacion();
 		bi = bien.getCombinacion();
 		for (i = 0; i < ocu.length; i++) {
 			for (j = 0; j < bi.length && !salir; j++) {
-				System.out.printf("bi:%s ocu:%s\t", bi[j].getColor(), ocu[i].getColor());
-				bebe = bi[j].equals(ocu[i]);
+				System.out.printf("bi:%s ocu:%s\t", bi[i].getColor(), ocu[j].getColor());
+				bebe = bi[i].equals(ocu[j]);
 				if (bebe && j==i) {
 					array[i] = 1;
 					salir = true;
 				} else if (bebe && j!=i){
 					array[i] = 2;
 				}
-				System.out.printf("%d, %d:%b\n", j, i, bebe);
+				System.out.printf("%d, %d:%b\n", i, j, bebe);
 			}
 			bebe = false;
 			salir = false;
@@ -151,13 +150,14 @@ public class Pruebas {
 //			}
 //		}
 //		System.out.println("▬▬▬▬▬▬▬▬▬");
-		/*System.out.println("\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯");
+		System.out.println("\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯");
 		for (i = 0; i < numero; i++) {
 			for(j = 0; j < numero; j++) {
 				if (j == 0) 
 					System.out.print(VERDE + "|"+ RESET);
 				System.out.printf("%s⯂%s%s|%2$s", ROJO, RESET, VERDE);
-			}*/
+			}
+		}
 //			System.out.println("\n▬▬▬▬▬▬▬▬▬");
 			/*System.out.println("\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯");
 			if (i == numero-1) 

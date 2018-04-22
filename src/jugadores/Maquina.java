@@ -4,7 +4,8 @@ import java.util.*;
 
 import jugadores.Tablero.*;
 import mastermind.*;
-import utilities.Colores;
+import utilities.*;
+import utilities.Teclado.*;
 
 public class Maquina extends Jugador {
 	
@@ -13,57 +14,49 @@ public class Maquina extends Jugador {
 	}
 
 	public void elegirCombinacion() {
+		int i, opcion;
+		String color = "";
 		Random rnd = new Random();
-		HashMap<String, Integer> mapa = new HashMap<>();
+		CombinacionRespuesta combinacion = new CombinacionRespuesta(modo.getNumCasillas());
 		
-		
-	}
-
-	public void elegirCombinacionOculta() {
-		
-	}
-
-	public CombinacionRespuesta indicarRespuesta(Combinacion combinacion) {
-		boolean salir = false, comprobar;
-		int i, j, contador = 0, negras = 0, blancas = 0, negrasBlancas[] = new int[modo.getNumCasillas()];
-		CombinacionRespuesta respuesta = new CombinacionRespuesta(modo.getNumCasillas());
-		Casillas combiAdversario[] = combinacion.getCombinacion();
-		Casillas combiMia[] = tablero.lastCombinacion().getCombinacion();
-		
-		if (modo == ModoDeJuego.FACIL && modo == ModoDeJuego.MEDIO) {
-			for (i = 0; i < modo.getNumCasillas(); i++) {
-				for (j = 0; j < modo.getNumCasillas() && !salir; j++) {
-					comprobar = combiMia[j].equals(combiAdversario[i]);
-					if (comprobar && j == i) {
-						negrasBlancas[i] = 1;
-						salir = true;
-					} else if (comprobar && j != i) {
-						negrasBlancas[i] = 2;
-					}
-				}
-				comprobar = false;
-				salir = false;
-			}
-			for (int c : negrasBlancas) {
-				if (c == 1)
-					negras++;
-				else if (c == 2)
-					blancas++;
-			}
+		for (i = 0; i < modo.getNumCasillas(); i++) {
+			opcion = rnd.nextInt(modo.getNumColores());
+				color = eleccion((byte) opcion);
+				combinacion.addFicha(color, i);
 		}
+		tablero.addCombinacion(combinacion);
+	}
+
+	public Combinacion elegirCombinacionOculta() {
+		int i = 0, opcion;
+		String color = "";
+		Random rnd = new Random();
+		HashMap<Integer, String> mapa = new HashMap<>();
+		Combinacion combinacion = new Combinacion(modo.getNumCasillas());
+		
 		do {
-			if (negras > 0) {
-				respuesta.addRespuesta(Colores.NEGRO, contador);
-				negras--;
-			} else if (blancas > 0) {
-				respuesta.addRespuesta(Colores.BLANCO, contador);
-				blancas--;
-			}
-			if (blancas == 0 && negras == 0)
-				salir = true;
-			contador++;
-		} while (!salir);
+			opcion = rnd.nextInt(modo.getNumColores());
+			color = eleccion((byte) opcion);
 			
-		return respuesta;
+			if (modo != ModoDeJuego.DIFICIL) {
+				if (!mapa.containsKey(opcion)) {
+					combinacion.addFicha(color, i);
+					mapa.put(opcion, color);
+					i++;
+				} 
+			} else {
+				combinacion.addFicha(color, i);
+				i++;
+			}
+		} while (i < modo.getNumCasillas());
+		combinacionPropia = combinacion;
+		return combinacion;
+	}
+
+	public CombinacionRespuesta indicarRespuesta(Combinacion combinacionAdversario) {
+		int respuestaCorrecta[];
+		
+		respuestaCorrecta = comprobarRespuesta(combinacionAdversario);
+		return insertRespuesta(combinacionAdversario, respuestaCorrecta);
 	}
 }
