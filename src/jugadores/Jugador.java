@@ -3,61 +3,107 @@ package jugadores;
 import jugadores.Tablero.*;
 import mastermind.*;
 import utilities.*;
-import utilities.Teclado.*;
 
 public abstract class Jugador {
 	protected Tablero tablero;
 	protected ModoDeJuego modo;
-
+	protected Combinacion combinacionPropia;
+	
 	public Jugador(ModoDeJuego modo) {
 		this.modo = modo;
 		tablero = new Tablero(modo);
 	}
 
 	public abstract void elegirCombinacion();
-	public abstract void elegirCombinacionOculta();
-	public abstract CombinacionRespuesta indicarRespuesta(Combinacion combinacion);
-	public void addCombinacion(CombinacionRespuesta combinacion) {
-		tablero.addCombinacion(combinacion);
+
+	public abstract Combinacion elegirCombinacionOculta();
+
+	public abstract void indicarRespuesta(CombinacionRespuesta combinacion);
+	
+	public Tablero getTablero() {
+		return tablero;
 	}
-	protected String eleccion() {
-		byte opcion;
-		final byte MINNUM = 1;
-		String color = "";
+	
+	public int[] comprobarRespuesta(CombinacionRespuesta combinacionAdversario) {
+		boolean salir = false, comprobar;
+		int i, j, fichasRespuesta[] = new int[modo.getNumCasillas()];
+		int respuestaCorrecta[] = new int[3];
+		for (i = 0; i < modo.getNumCasillas(); i++) {
+			for (j = 0; j < modo.getNumCasillas() && !salir; j++) {
+				comprobar = combinacionPropia.oneFicha(i).equals(combinacionAdversario.oneFicha(j));
+				if (comprobar && j == i) {
+					fichasRespuesta[i] = 1;
+					salir = true;
+				} else if (comprobar && j != i) {
+					fichasRespuesta[i] = 2;
+				}
+			}
+			comprobar = false;
+			salir = false;
+		}
+		for (int c: fichasRespuesta) {
+			if (c == 1)
+				respuestaCorrecta[0]++;
+			else if (c == 2)
+				respuestaCorrecta[1]++;
+			else
+				respuestaCorrecta[2]++;
+		}
+		return respuestaCorrecta;
+	}
+
+	protected void insertRespuesta(CombinacionRespuesta combinacionAdversario, int[] RespuestaCorrecta) {
+		int contador = 0;
 		
-		opcion = Teclado.rango(MINNUM,(byte) modo.getNumColores(), Rango.AMBOS_INCLUIDOS, Tipo.BYTE);
+		do {
+			if (RespuestaCorrecta[0] > 0) {
+				combinacionAdversario.addRespuesta(Constantes.NEGRO, contador);
+				RespuestaCorrecta[0]--;
+			} else if (RespuestaCorrecta[1] > 0) {
+				combinacionAdversario.addRespuesta(Constantes.GRIS, contador);
+				RespuestaCorrecta[1]--;
+			} else if (RespuestaCorrecta[2] > 0) {
+				combinacionAdversario.addRespuesta("vacio", contador);
+			}
+			contador++;
+		} while (contador < modo.getNumCasillas());
+	}
+	
+	protected String eleccion(byte opcion) {
+		String color = "";
+
 		switch (opcion) {
+			case 0:
+				color = Constantes.ROJO;
+				break;
 			case 1:
-				color = Colores.ROJO;
+				color = Constantes.CELESTE;
 				break;
 			case 2:
-				color = Colores.VERDE;
+				color = Constantes.AMARILLO;
 				break;
 			case 3:
-				color = Colores.AMARILLO;
+				color = Constantes.COLORCARNE;
 				break;
 			case 4:
-				color = Colores.MORADO;
+				color = Constantes.AZUL;
 				break;
 			case 5:
-				color = Colores.AZUL;
+				color = Constantes.VIOLET;
 				break;
 			case 6:
-				color = Colores.VIOLET;
+				color = Constantes.LIGHT_GREEN;
 				break;
 			case 7:
-				color = Colores.LIGHT_GREEN;
+				color = Constantes.BROWN;
 				break;
 			case 8:
-				color = Colores.BROWN;
+				color = Constantes.NARANJA;
 				break;
 			case 9:
-				color = Colores.NARANJA;
+				color = Constantes.VERDE;
 				break;
-			case 10:
-				color = Colores.CELESTE;
-				break;
-			}
+		}
 		return color;
 	}
 }
