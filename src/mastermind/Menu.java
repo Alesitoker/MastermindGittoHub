@@ -1,6 +1,6 @@
 ﻿package mastermind;
 
-import static utilities.Colores.*;
+import static utilities.Constantes.*;
 
 import jugadores.*;
 import utilities.Teclado;

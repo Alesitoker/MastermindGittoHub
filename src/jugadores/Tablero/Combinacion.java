@@ -18,10 +18,6 @@ public class Combinacion implements Dibujable {
 		combinacion[posicion] = new Casilla(color);
 	}
 	
-	public Casilla[] getCombinacion() {
-		return combinacion;
-	}
-	
 	public Casilla oneFicha(int posicion) {
 		return combinacion[posicion];
 	}

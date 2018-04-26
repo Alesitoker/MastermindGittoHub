@@ -1,7 +1,7 @@
 package jugadores.Tablero;
 
 import interfaces.Dibujable;
-import utilities.Colores;
+import static utilities.Constantes.*;
 
 public class Casilla implements Dibujable {
 	private String color;
@@ -24,19 +24,15 @@ public class Casilla implements Dibujable {
 	}
 
 	public void dibujar() {
-		String figura = "⬤";
-		
-		System.out.printf("%s%s%s", color, figura, Colores.RESET);
+		System.out.printf("%s%s%s", color, figura, RESET);
 	}
 	
 	public void Dibujar_respuesta() {
-		String figura = "⬟";
-		String figuraVacia = "⬠";
 		
 		if (!color.equals("vacio")) {
-			System.out.printf("%s%s%s", color, figura, Colores.RESET);
+			System.out.printf("%s%s%s", color, figuraRespuesta, RESET);
 		} else {
-			System.out.printf("%s ", figuraVacia);
+			System.out.printf("%s%s%s", GRIS, figuraRespuestaVacia, RESET);
 		}
 	}
 }

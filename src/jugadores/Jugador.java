@@ -18,13 +18,13 @@ public abstract class Jugador {
 
 	public abstract Combinacion elegirCombinacionOculta();
 
-	public abstract CombinacionRespuesta indicarRespuesta(Combinacion combinacion);
+	public abstract void indicarRespuesta(CombinacionRespuesta combinacion);
 	
 	public Tablero getTablero() {
 		return tablero;
 	}
 	
-	protected int[] comprobarRespuesta(Combinacion combinacionAdversario) {
+	public int[] comprobarRespuesta(CombinacionRespuesta combinacionAdversario) {
 		boolean salir = false, comprobar;
 		int i, j, fichasRespuesta[] = new int[modo.getNumCasillas()];
 		int respuestaCorrecta[] = new int[3];
@@ -52,22 +52,21 @@ public abstract class Jugador {
 		return respuestaCorrecta;
 	}
 
-	protected CombinacionRespuesta insertRespuesta(Combinacion combinacionAdversario, int[] RespuestaCorrecta) {
+	protected void insertRespuesta(CombinacionRespuesta combinacionAdversario, int[] RespuestaCorrecta) {
 		int contador = 0;
-		CombinacionRespuesta respuesta = new CombinacionRespuesta(combinacionAdversario.getCombinacion());
+		
 		do {
 			if (RespuestaCorrecta[0] > 0) {
-				respuesta.addRespuesta(Colores.NEGRO, contador);
+				combinacionAdversario.addRespuesta(Constantes.NEGRO, contador);
 				RespuestaCorrecta[0]--;
 			} else if (RespuestaCorrecta[1] > 0) {
-				respuesta.addRespuesta(Colores.BLANCO, contador);
+				combinacionAdversario.addRespuesta(Constantes.GRIS, contador);
 				RespuestaCorrecta[1]--;
 			} else if (RespuestaCorrecta[2] > 0) {
-				respuesta.addRespuesta("vacio", contador);
+				combinacionAdversario.addRespuesta("vacio", contador);
 			}
 			contador++;
 		} while (contador < modo.getNumCasillas());
-		return respuesta;
 	}
 	
 	protected String eleccion(byte opcion) {
@@ -75,34 +74,34 @@ public abstract class Jugador {
 
 		switch (opcion) {
 			case 0:
-				color = Colores.ROJO;
+				color = Constantes.ROJO;
 				break;
 			case 1:
-				color = Colores.VERDE;
+				color = Constantes.CELESTE;
 				break;
 			case 2:
-				color = Colores.AMARILLO;
+				color = Constantes.AMARILLO;
 				break;
 			case 3:
-				color = Colores.MORADO;
+				color = Constantes.COLORCARNE;
 				break;
 			case 4:
-				color = Colores.AZUL;
+				color = Constantes.AZUL;
 				break;
 			case 5:
-				color = Colores.VIOLET;
+				color = Constantes.VIOLET;
 				break;
 			case 6:
-				color = Colores.LIGHT_GREEN;
+				color = Constantes.LIGHT_GREEN;
 				break;
 			case 7:
-				color = Colores.BROWN;
+				color = Constantes.BROWN;
 				break;
 			case 8:
-				color = Colores.NARANJA;
+				color = Constantes.NARANJA;
 				break;
 			case 9:
-				color = Colores.CELESTE;
+				color = Constantes.VERDE;
 				break;
 		}
 		return color;

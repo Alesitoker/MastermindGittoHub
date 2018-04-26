@@ -4,6 +4,8 @@ import java.util.LinkedList;
 
 import interfaces.*;
 import mastermind.*;
+import static mastermind.ModoDeJuego.*;
+
 
 public class Tablero implements Dibujable, Dibujable_Tablero {
 	private Combinacion combinacionOculta;
@@ -30,31 +32,42 @@ public class Tablero implements Dibujable, Dibujable_Tablero {
 		return combinaciones;
 	}
 
-	public Combinacion lastCombinacion() {
+	public CombinacionRespuesta lastCombinacion() {
 		return combinaciones.getLast();
-	}
-	
-	public void addLastRespuesta(CombinacionRespuesta combinacion) {
-		combinaciones.removeLast();
-		addCombinacion(combinacion);		
 	}
 	
 	public void dibujar() {
 		int i;
-		System.out.print("   ");
+		String espacios = "   ";
+		
+		System.out.print("    ");
 		combinacionOculta.dibujar();
-		System.out.println();
+		if (modo == MEDIO) {
+			System.out.println("\n            ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯");
+		} else {
+			System.out.println("\n            ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯");
+		}
 		for (i = 0; i < combinaciones.size(); i++) {
-			System.out.printf("%d  ", i+1);
+			if (i >= 9)
+				espacios = "  ";
+			System.out.printf("%d%s", i+1, espacios);
 			combinaciones.get(i).dibujar();
 			System.out.println();
 		}
 	}
 	
+	public void dibujar_oculta() {
+		combinacionOculta.dibujar();
+	}
+	
 	public void dibujar_noOculta() {
 		int i;
+		String espacios = "   ";
 		
 		for (i = 0; i < combinaciones.size(); i++) {
+			if (i >= 9)
+				espacios = "  ";
+			System.out.printf("%d%s", i+1, espacios);
 			combinaciones.get(i).dibujar();
 			System.out.println();
 		}

@@ -5,7 +5,7 @@ public class CombinacionRespuesta extends Combinacion {
 	
 	public CombinacionRespuesta(int numCasillas) {
 		super(numCasillas);
-//		respuesta = new Casilla[numCasillas];
+		respuesta = new Casilla[numCasillas];
 	}
 	
 	public CombinacionRespuesta(Casilla[] combinacion) {
@@ -16,10 +16,6 @@ public class CombinacionRespuesta extends Combinacion {
 
 	public void addRespuesta(String color, int posicion) {
 		respuesta[posicion] = new Casilla(color);
-	}
-	
-	public Casilla[] getRespuesta() {
-		return respuesta;
 	}
 	
 	public Casilla oneRespuesta(int posicion) {
@@ -34,11 +30,12 @@ public class CombinacionRespuesta extends Combinacion {
 			System.out.print("|");
 		}
 		System.out.print("  ");
-		if (respuesta != null) {
-			for (i = 0; i < respuesta.length; i++) {
+		for (i = 0; i < respuesta.length; i++) {
+			if (respuesta[i] != null) {
 				respuesta[i].Dibujar_respuesta();
 				System.out.print(" ");
 			}
 		}
 	}
 }
+

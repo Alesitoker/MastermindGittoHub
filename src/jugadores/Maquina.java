@@ -4,8 +4,6 @@ import java.util.*;
 
 import jugadores.Tablero.*;
 import mastermind.*;
-import utilities.*;
-import utilities.Teclado.*;
 
 public class Maquina extends Jugador {
 	
@@ -53,10 +51,7 @@ public class Maquina extends Jugador {
 		return combinacion;
 	}
 
-	public CombinacionRespuesta indicarRespuesta(Combinacion combinacionAdversario) {
-		int respuestaCorrecta[];
-		
-		respuestaCorrecta = comprobarRespuesta(combinacionAdversario);
-		return insertRespuesta(combinacionAdversario, respuestaCorrecta);
+	public void indicarRespuesta(CombinacionRespuesta combinacionAdversario) {
+		insertRespuesta(combinacionAdversario, comprobarRespuesta(combinacionAdversario));
 	}
 }
