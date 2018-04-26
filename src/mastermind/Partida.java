@@ -6,7 +6,6 @@ import jugadores.*;
 
 import static mastermind.ModoDeJuego.*;
 import static utilities.Constantes.*;
-import static mastermind.Partida.ResultadoFinal.*;
 
 public class Partida {
 	private Jugador jugador[];
@@ -18,7 +17,7 @@ public class Partida {
 		this.jugador = jugador;
 	}
 	
-	public enum ResultadoFinal {
+	private enum ResultadoFinal {
 		GANADOR, PERDEDOR, EMPATE, GANADORMAQUINA;
 	}
 	
@@ -85,19 +84,19 @@ public class Partida {
 				mostrado = false;
 				respondido = jugador[1].comprobarRespuesta(jugador[0].getTablero().lastCombinacion());
 				if (jugador[0] instanceof Usuario && (respondido[1] == 0 && respondido[2] == 0)) {
-					resultado = GANADOR;
+					resultado = ResultadoFinal.GANADOR;
 					salir = true;
 				} else if (respondido[1] == 0 && respondido[2] == 0) {
-					resultado = PERDEDOR;
+					resultado = ResultadoFinal.PERDEDOR;
 					salir = true;
 				}
 			}
 			
 		} while (!salir && turno < modo.getNumIntentos());
 		if (jugador[0] instanceof Usuario && (resultado == null || turno == modo.getNumIntentos())) {
-			resultado = PERDEDOR;
+			resultado = ResultadoFinal.PERDEDOR;
 		} else {
-			resultado = GANADOR;
+			resultado = ResultadoFinal.GANADOR;
 		}
 		return resultado;
 	}
@@ -142,13 +141,13 @@ public class Partida {
 					respondido[i] = jugador[i].comprobarRespuesta(jugador[j].getTablero().lastCombinacion());
 				}
 				if ((respondido[0][1] == 0 && respondido[0][2] == 0) && (respondido[1][1] == 0 && respondido[1][2] == 0)) {
-					resultado = EMPATE;
+					resultado = ResultadoFinal.EMPATE;
 					salir = true;
 				} else if (respondido[0][1] == 0 && respondido[0][2] == 0) {
-					resultado = GANADOR;
+					resultado = ResultadoFinal.GANADOR;
 					salir = true;
 				} else if (respondido[1][1] == 0 && respondido[1][2] == 0) {
-					resultado = PERDEDOR;
+					resultado = ResultadoFinal.PERDEDOR;
 					salir = true;
 				}
 				elegido = false;
@@ -157,9 +156,9 @@ public class Partida {
 		} while (!salir && turno < modo.getNumIntentos());
 		if (resultado == null) {
 			if (respondido[0][0] > respondido[1][0]) {
-				resultado = GANADOR;
+				resultado = ResultadoFinal.GANADOR;
 			} else if (respondido[0][0] < respondido[1][0]) {
-				resultado = PERDEDOR;
+				resultado = ResultadoFinal.PERDEDOR;
 			}
 		}
 		return resultado;
@@ -183,10 +182,10 @@ public class Partida {
 				respondido[i] = jugador[i].comprobarRespuesta(jugador[j].getTablero().lastCombinacion());
 			}
 			if ((respondido[0][1] == 0 && respondido[0][2] == 0) && (respondido[1][1] == 0 && respondido[1][2] == 0)) {
-				resultado = EMPATE;
+				resultado = ResultadoFinal.EMPATE;
 				salir = true;
 			} else if ((respondido[0][1] == 0 && respondido[0][2] == 0)  || (respondido[1][1] == 0 && respondido[1][2] == 0)) {
-				resultado = GANADORMAQUINA;
+				resultado = ResultadoFinal.GANADORMAQUINA;
 				salir = true;
 			}
 		} while (!salir);
@@ -241,7 +240,7 @@ public class Partida {
 		}
 	}
 	
-	public void dibujar() {
+	private void dibujar() {
 		int i, j;
 		String espacios;
 		
