@@ -4,13 +4,27 @@ import java.util.*;
 
 import jugadores.Tablero.*;
 import mastermind.*;
-
+/**
+ * Esta clase es el jugador Maquina de la partida.
+ * 
+ * @author Alejandro Díaz
+ * @version 1.0
+ * @since 1.0
+ *
+ */
 public class Maquina extends Jugador {
-	
+	/**
+	 * Contruye un objeto Maquina con el modo que se va a jugar.
+	 * @param modo Modo de juego que se va a jugar.
+	 */
 	public Maquina(ModoDeJuego modo) {
 		super(modo);
 	}
-
+	/**
+	 * Elige una combinacion.
+	 * @see #eleccion(byte)
+	 * @since 1.0
+	 */
 	public void elegirCombinacion() {
 		int i, opcion;
 		String color = "";
@@ -19,12 +33,17 @@ public class Maquina extends Jugador {
 		
 		for (i = 0; i < modo.getNumCasillas(); i++) {
 			opcion = rnd.nextInt(modo.getNumColores());
-				color = eleccion((byte) opcion);
-				combinacion.addFicha(color, i);
+			color = eleccion((byte) opcion);
+			combinacion.addFicha(color, i);
 		}
 		tablero.addCombinacion(combinacion);
 	}
-
+	/**
+	 * Elige la combinacion oculta.
+	 * @return La combinacion oculta elegida.
+	 * @see #eleccion(byte)
+	 * @since 1.0
+	 */
 	public Combinacion elegirCombinacionOculta() {
 		int i = 0, opcion;
 		String color = "";
@@ -50,7 +69,13 @@ public class Maquina extends Jugador {
 		combinacionPropia = combinacion;
 		return combinacion;
 	}
-
+	/**
+	 * Indicar las fichas en la posicion correcta y en la posicion incorrecta de la combinacion del adversario con la oculta.
+	 * @param combinacionAdversario Ultima combinacion del adversario.
+	 * @see #comprobarRespuesta(CombinacionRespuesta)
+	 * @see #insertRespuesta(CombinacionRespuesta, int[])
+	 * @since 1.0
+	 */
 	public void indicarRespuesta(CombinacionRespuesta combinacionAdversario) {
 		insertRespuesta(combinacionAdversario, comprobarRespuesta(combinacionAdversario));
 	}

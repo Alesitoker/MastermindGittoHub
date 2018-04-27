@@ -3,27 +3,68 @@ package jugadores;
 import jugadores.Tablero.*;
 import mastermind.*;
 import utilities.*;
-
+/**
+ * Esta clase es el jugador de la partida.
+ * 
+ * @author Alejandro Díaz
+ * @version 1.0
+ * @since 1.0
+ *
+ */
 public abstract class Jugador {
+	/**
+	 * El tablero del jugador.
+	 */
 	protected Tablero tablero;
+	/**
+	 * Modo que se va a jugar.
+	 */
 	protected ModoDeJuego modo;
+	/**
+	 * combinacion oculta que introduce el jugador.
+	 */
 	protected Combinacion combinacionPropia;
-	
+	/**
+	 * Construye un Jugador con el modo que se va a jugar.
+	 * @param modo Modo de juego que se va a jugar.
+	 */
 	public Jugador(ModoDeJuego modo) {
 		this.modo = modo;
 		tablero = new Tablero(modo);
 	}
-
+	/**
+	 * Elige una combinacion.
+	 * @since 1.0
+	 */
 	public abstract void elegirCombinacion();
-
+	/**
+	 * Elige la combinacion oculta.
+	 * @return La combinacion oculta elegida.
+	 * @see Combinacion
+	 * @since 1.0
+	 */
 	public abstract Combinacion elegirCombinacionOculta();
-
-	public abstract void indicarRespuesta(CombinacionRespuesta combinacion);
-	
+	/**
+	 * Indicar las fichas en la posicion correcta y en la posicion incorrecta de la combinacion del adversario con la oculta.
+	 * @param combinacionAdversario Ultima combinacion del adversario.
+	 * @since 1.0
+	 */
+	public abstract void indicarRespuesta(CombinacionRespuesta combinacionAdversario);
+	/**
+	 * Devuelve el tablero del jugador.
+	 * @return El tablero del jugador.
+	 * @see Tablero
+	 * @since 1.0
+	 */
 	public Tablero getTablero() {
 		return tablero;
 	}
-	
+	/**
+	 * Compara la combinacion del adversario con la oculta para dar el numero de fichas en posicion correcta, en posicion incorrecta y si no hay ninguna.
+	 * @param combinacionAdversario Ultima combinacion del adversario.
+	 * @return El numero de fichas en la posicion correcta, en posicion incorrecta y si no hay ninguna.
+	 * @since 1.0
+	 */
 	public int[] comprobarRespuesta(CombinacionRespuesta combinacionAdversario) {
 		boolean salir = false, comprobar;
 		int i, j, fichasRespuesta[] = new int[modo.getNumCasillas()];
@@ -32,9 +73,11 @@ public abstract class Jugador {
 			for (j = 0; j < modo.getNumCasillas() && !salir; j++) {
 				comprobar = combinacionPropia.oneFicha(i).equals(combinacionAdversario.oneFicha(j));
 				if (comprobar && j == i) {
+					// 1 == ficha colocada en posicion correcta.
 					fichasRespuesta[i] = 1;
 					salir = true;
 				} else if (comprobar && j != i) {
+					// 2 == ficha colocada en posicion incorrecta
 					fichasRespuesta[i] = 2;
 				}
 			}
@@ -51,7 +94,12 @@ public abstract class Jugador {
 		}
 		return respuestaCorrecta;
 	}
-
+	/**
+	 * Introduce en la respuesta el numero de fichas en posicion correcta, en posicion incorrecta y si no hay ninguna.
+	 * @param combinacionAdversario Ultima combinacion del adversario.
+	 * @param RespuestaCorrecta	El numero de fichas en la posicion correcta, en posicion incorrecta y si no hay ninguna.
+	 * @since 1.0
+	 */
 	protected void insertRespuesta(CombinacionRespuesta combinacionAdversario, int[] RespuestaCorrecta) {
 		int contador = 0;
 		
@@ -68,7 +116,12 @@ public abstract class Jugador {
 			contador++;
 		} while (contador < modo.getNumCasillas());
 	}
-	
+	/**
+	 * Cambia la opcion del jugador por un color.
+	 * @param opcion Color elegido.
+	 * @return El color elegido.
+	 * @since 1.0
+	 */
 	protected String eleccion(byte opcion) {
 		String color = "";
 

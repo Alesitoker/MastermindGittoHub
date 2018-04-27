@@ -6,8 +6,20 @@ import jugadores.*;
 import utilities.Teclado;
 import utilities.Teclado.*;
 import static mastermind.ModoDeJuego.*;
-
+/**
+ * Esta clase permite configurar la partida, mostrando menus.
+ * 
+ * @author Alejandro Díaz
+ * @version 1.0
+ * @since 1.0
+ *
+ */
 public class Menu {
+	/**
+	 * Configura una partida.
+	 * @return Una partida configurada.
+	 * @since 1.0
+	 */
 	public Partida configurarPartida() {
 		final byte MINNUM = 1, MAXNUM = 3, JUGADORESMAX = 2;
 		byte opcion, ju = 0, jm = 1;

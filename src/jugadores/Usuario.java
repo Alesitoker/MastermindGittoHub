@@ -8,13 +8,27 @@ import jugadores.Tablero.*;
 import mastermind.*;
 import utilities.*;
 import utilities.Teclado.*;
-
+/**
+ * Esta clase es el jugador Humano de la partida.
+ * 
+ * @author Alejandro Díaz
+ * @version 1.0
+ * @since 1.0
+ *
+ */
 public class Usuario extends Jugador {
-
+	/**
+	 * Contruye un objeto Usuario con el modo que se va a jugar.
+	 * @param modo Modo de juego que se va a jugar.
+	 */
 	public Usuario(ModoDeJuego modo) {
 		super(modo);
 	}
-	
+	/**
+	 * Se le muestra un menu al usuario, teniendo que elegir entre una de las opciones hasta formar la combinacion.
+	 * @see #eleccion(byte)
+	 * @since 1.0
+	 */
 	public void elegirCombinacion() {
 		int i;
 		String color = "";
@@ -33,7 +47,12 @@ public class Usuario extends Jugador {
 		}
 		tablero.addCombinacion(combinacion);
 	}
-
+	/**
+	 * Se le muestra un menu al usuario, teniendo que elegir entre una de las opciones hasta formar la combinacion oculta.
+	 * @return La combinacion oculta elegida.
+	 * @see #eleccion(byte)
+	 * @since 1.0
+	 */
 	public Combinacion elegirCombinacionOculta() {
 		int i = 0;
 		byte opcion;
@@ -60,7 +79,13 @@ public class Usuario extends Jugador {
 		combinacionPropia = combinacion;
 		return combinacion;
 	}
-
+	/**
+	 * Indicar las fichas en la posicion correcta y en la posicion incorrecta de la combinacion del adversario con la oculta.
+	 * @param combinacionAdversario Ultima combinacion del adversario.
+	 * @see #comprobarRespuesta(CombinacionRespuesta)
+	 * @see #insertRespuesta(CombinacionRespuesta, int[])
+	 * @since 1.0
+	 */
 	public void indicarRespuesta(CombinacionRespuesta combinacionAdversario) {
 		byte numPosicionCorrecta, numPosicionIncorrecta;
 		int respuestaCorrecta[] = null;
