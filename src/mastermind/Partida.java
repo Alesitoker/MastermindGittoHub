@@ -125,7 +125,7 @@ public class Partida implements DibujablePartida{
 		} while (!salir && turno < modo.getNumIntentos());
 		if (jugadores[0] instanceof Usuario && (resultado == null || turno == modo.getNumIntentos())) {
 			resultado = ResultadoFinal.PERDEDOR;
-		} else {
+		} else if (resultado == null){
 			resultado = ResultadoFinal.GANADOR;
 		}
 		return resultado;
