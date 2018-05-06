@@ -95,27 +95,18 @@ public abstract class Jugador {
 				mapaAdversario.remove(i);
 			}
 		}
-		if (!mapaOculta.isEmpty() && !mapaAdversario.isEmpty()) {
-			for (i = 0; i < modo.getNumCasillas(); i++) {
-				if (mapaOculta.containsKey(i)) {
-					for (j = 0; j < modo.getNumCasillas() && !salir; j++) {
-						if (mapaAdversario.containsKey(j)) {
-							if (mapaOculta.get(i).equals(mapaAdversario.get(j))) {
-								respuestaCorrecta[1]++;
-								mapaOculta.remove(i);
-								mapaAdversario.remove(j);
-								salir = true;
-							}
-						}
-					}
-					salir = false;
+		for (i = 0; i < modo.getNumCasillas() && (!mapaOculta.isEmpty() && !mapaAdversario.isEmpty()); i++) {
+			for (j = 0; j < modo.getNumCasillas() && !salir && mapaOculta.containsKey(i); j++) {
+				if (mapaAdversario.containsKey(j) && mapaOculta.get(i).equals(mapaAdversario.get(j))) {
+					respuestaCorrecta[1]++;
+					mapaOculta.remove(i);
+					mapaAdversario.remove(j);
+					salir = true;
 				}
 			}
+			salir = false;
 		}
-		
-		if (respuestaCorrecta[0] + respuestaCorrecta[1] < modo.getNumCasillas()) {
-			respuestaCorrecta[2] = modo.getNumCasillas() - (respuestaCorrecta[0] + respuestaCorrecta[1]);
-		}
+		respuestaCorrecta[2] = modo.getNumCasillas() - (respuestaCorrecta[0] + respuestaCorrecta[1]);
 		
 		return respuestaCorrecta;
 	}

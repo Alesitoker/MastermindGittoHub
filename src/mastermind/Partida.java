@@ -239,7 +239,7 @@ public class Partida implements DibujablePartida{
 				salir = true;
 			}
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(1500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -338,7 +338,7 @@ public class Partida implements DibujablePartida{
 			System.out.println();
 			if (modo == DIFICIL) {
 				try {
-					Thread.sleep(3000);
+					Thread.sleep(2700);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
