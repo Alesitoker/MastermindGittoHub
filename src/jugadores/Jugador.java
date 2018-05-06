@@ -1,8 +1,10 @@
 package jugadores;
 
+import java.util.HashMap;
+
 import jugadores.Tablero.*;
 import mastermind.*;
-import utilities.*;
+
 /**
  * Esta clase es el jugador de la partida.
  * 
@@ -21,7 +23,7 @@ public abstract class Jugador {
 	 */
 	protected ModoDeJuego modo;
 	/**
-	 * combinacion oculta que introduce el jugador.
+	 * combinacion oculta que es introducida por el propio jugador.
 	 */
 	protected Combinacion combinacionPropia;
 	/**
@@ -60,38 +62,61 @@ public abstract class Jugador {
 		return tablero;
 	}
 	/**
+	 * Modifica la combinacion oculta propia del jugador.
+	 * @param combinacionPropia La nueva combinacion oculta propia.
+	 * @since 1.0
+	 */
+	// se utiliza solo en las pruebas.
+	public void setCombinacionPropia(Combinacion combinacionPropia) {
+		this.combinacionPropia = combinacionPropia;
+	}
+	/**
 	 * Compara la combinacion del adversario con la oculta para dar el numero de fichas en posicion correcta, en posicion incorrecta y si no hay ninguna.
 	 * @param combinacionAdversario Ultima combinacion del adversario.
 	 * @return El numero de fichas en la posicion correcta, en posicion incorrecta y si no hay ninguna.
 	 * @since 1.0
 	 */
 	public int[] comprobarRespuesta(CombinacionRespuesta combinacionAdversario) {
-		boolean salir = false, comprobar;
-		int i, j, fichasRespuesta[] = new int[modo.getNumCasillas()];
+		boolean salir = false;
+		int i, j;
 		int respuestaCorrecta[] = new int[3];
+		HashMap<Integer, Casilla> mapaOculta = new HashMap<>();
+		HashMap<Integer, Casilla> mapaAdversario = new HashMap<>();
+		
 		for (i = 0; i < modo.getNumCasillas(); i++) {
-			for (j = 0; j < modo.getNumCasillas() && !salir; j++) {
-				comprobar = combinacionPropia.oneFicha(i).equals(combinacionAdversario.oneFicha(j));
-				if (comprobar && j == i) {
-					// 1 == ficha colocada en posicion correcta.
-					fichasRespuesta[i] = 1;
-					salir = true;
-				} else if (comprobar && j != i) {
-					// 2 == ficha colocada en posicion incorrecta
-					fichasRespuesta[i] = 2;
+			mapaOculta.put(i, combinacionPropia.oneFicha(i));
+			mapaAdversario.put(i, combinacionAdversario.oneFicha(i));
+		}
+		
+		for (i = 0; i < modo.getNumCasillas(); i++) {
+			if (mapaOculta.get(i).equals(mapaAdversario.get(i))) {
+				respuestaCorrecta[0]++;
+				mapaOculta.remove(i);
+				mapaAdversario.remove(i);
+			}
+		}
+		if (!mapaOculta.isEmpty() && !mapaAdversario.isEmpty()) {
+			for (i = 0; i < modo.getNumCasillas(); i++) {
+				if (mapaOculta.containsKey(i)) {
+					for (j = 0; j < modo.getNumCasillas() && !salir; j++) {
+						if (mapaAdversario.containsKey(j)) {
+							if (mapaOculta.get(i).equals(mapaAdversario.get(j))) {
+								respuestaCorrecta[1]++;
+								mapaOculta.remove(i);
+								mapaAdversario.remove(j);
+								salir = true;
+							}
+						}
+					}
+					salir = false;
 				}
 			}
-			comprobar = false;
-			salir = false;
 		}
-		for (int c: fichasRespuesta) {
-			if (c == 1)
-				respuestaCorrecta[0]++;
-			else if (c == 2)
-				respuestaCorrecta[1]++;
-			else
-				respuestaCorrecta[2]++;
+		
+		if (respuestaCorrecta[0] + respuestaCorrecta[1] < modo.getNumCasillas()) {
+			respuestaCorrecta[2] = modo.getNumCasillas() - (respuestaCorrecta[0] + respuestaCorrecta[1]);
 		}
+		
 		return respuestaCorrecta;
 	}
 	/**
@@ -102,61 +127,19 @@ public abstract class Jugador {
 	 */
 	protected void insertRespuesta(CombinacionRespuesta combinacionAdversario, int[] RespuestaCorrecta) {
 		int contador = 0;
+		final byte FICHAPOSICIONCORRECTA = 0, FICHAPOSICIONINCORRECTA = 1, NOHAYFICHA = 2;
 		
 		do {
 			if (RespuestaCorrecta[0] > 0) {
-				combinacionAdversario.addRespuesta(Constantes.NEGRO, contador);
+				combinacionAdversario.addRespuesta(FICHAPOSICIONCORRECTA);
 				RespuestaCorrecta[0]--;
 			} else if (RespuestaCorrecta[1] > 0) {
-				combinacionAdversario.addRespuesta(Constantes.GRIS, contador);
+				combinacionAdversario.addRespuesta(FICHAPOSICIONINCORRECTA);
 				RespuestaCorrecta[1]--;
-			} else if (RespuestaCorrecta[2] > 0) {
-				combinacionAdversario.addRespuesta("vacio", contador);
+			} else {
+				combinacionAdversario.addRespuesta(NOHAYFICHA);
 			}
 			contador++;
 		} while (contador < modo.getNumCasillas());
-	}
-	/**
-	 * Cambia la opcion del jugador por un color.
-	 * @param opcion Color elegido.
-	 * @return El color elegido.
-	 * @since 1.0
-	 */
-	protected String eleccion(byte opcion) {
-		String color = "";
-
-		switch (opcion) {
-			case 0:
-				color = Constantes.ROJO;
-				break;
-			case 1:
-				color = Constantes.CELESTE;
-				break;
-			case 2:
-				color = Constantes.AMARILLO;
-				break;
-			case 3:
-				color = Constantes.COLORCARNE;
-				break;
-			case 4:
-				color = Constantes.AZUL;
-				break;
-			case 5:
-				color = Constantes.VIOLET;
-				break;
-			case 6:
-				color = Constantes.LIGHT_GREEN;
-				break;
-			case 7:
-				color = Constantes.BROWN;
-				break;
-			case 8:
-				color = Constantes.NARANJA;
-				break;
-			case 9:
-				color = Constantes.VERDE;
-				break;
-		}
-		return color;
 	}
 }

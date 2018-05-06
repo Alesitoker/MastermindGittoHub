@@ -3,9 +3,11 @@ package mastermind;
 import utilities.*;
 import utilities.Teclado.*;
 import jugadores.*;
+import interfaces.Dibujable_Partida;
 
 import static mastermind.ModoDeJuego.*;
 import static utilities.Constantes.*;
+
 /**
  * Esta clase es donde se juega la partida.
  * 
@@ -14,11 +16,11 @@ import static utilities.Constantes.*;
  * @since 1.0
  *
  */
-public class Partida {
+public class Partida implements Dibujable_Partida{
 	/**
 	 * Los jugadores que van a jugar.
 	 */
-	private Jugador jugadores[];
+	private Jugador jugadores[] = new Jugador[2];
 	/**
 	 * El modo de la partida que se va a jugar.
 	 */
@@ -30,33 +32,13 @@ public class Partida {
 	/**
 	 * Construye un nuevo objeto Partida con el modo de juego y los jugadores.
 	 * @param modo El modo de juego.
-	 * @param jugadores Los jugadores que juegan, deben ser dos jugadores.
-	 * @see #setJugadores(Jugador[])
+	 * @param jugador1 El jugador 1 de la partida.
+	 * @param jugador2 El jugador 2 de la partida.
 	 */
-	Partida(ModoDeJuego modo, Jugador jugadores[]) {
+	Partida(ModoDeJuego modo, Jugador jugador1, Jugador jugador2) {
 		this.modo = modo;
-		setJugadores(jugadores);
-	}
-	/**
-	 * Enum de los resultados de la partida.
-	 * @since 1.0
-	 *
-	 */
-	private enum ResultadoFinal {
-		GANADOR, PERDEDOR, EMPATE, GANADORMAQUINA;
-	}
-	/**
-	 * Añade los jugadores.
-	 * @param jugadores Los jugadores que juegan.
-	 * @since 1.0
-	 */
-	private void setJugadores(Jugador[] jugadores) {
-		final int MAXJUGADORES = 2;
-
-		if (jugadores.length == MAXJUGADORES)
-			this.jugadores = jugadores;
-//		else
-			// excepcion?
+		jugadores[0] = jugador1;
+		jugadores[1] = jugador2;
 	}
 	/**
 	 * Comienza una partida.
@@ -69,7 +51,7 @@ public class Partida {
 			jugadores[0].getTablero().setCombinacionOculta(jugadores[1].elegirCombinacionOculta());
 		} else {
 			for (int i = 0, j = jugadores.length-1; i < jugadores.length && j >= 0; i++, j--)
-			jugadores[i].getTablero().setCombinacionOculta(jugadores[j].elegirCombinacionOculta());
+				jugadores[i].getTablero().setCombinacionOculta(jugadores[j].elegirCombinacionOculta());
 		}
 
 		if (modo == FACIL)
@@ -104,8 +86,9 @@ public class Partida {
 						break;
 					case 2:
 						if (!jugadores[0].getTablero().getCombinaciones().isEmpty() && !mostrado) {
-							jugadores[0].getTablero().dibujar_noOculta();
-							System.out.printf("Nº Intentos: %d/%d\n\n", turno + 1, modo.getNumIntentos());
+							jugadores[0].getTablero().dibujar_noOculta();;
+							System.out.printf("Nº Intentos: %d/%d\n\n", turno, modo.getNumIntentos());
+							mostrado = true;
 						} else if (mostrado) {
 							System.out.printf("%sSolo puedes mostrar el tablero una vez por turno%s\n", Constantes.ROJO,
 									Constantes.RESET);
@@ -155,7 +138,7 @@ public class Partida {
 		byte opcion;
 		final byte MINNUM = 1, MAXNUM = 3;
 		boolean salir = false, mostrado = false, elegido = false;
-		int i, j, respondido[][] = new int[2][3];
+		int i, j, respondido[][] = new int[2][];
 		ResultadoFinal resultado = null;
 
 		do {
@@ -207,7 +190,7 @@ public class Partida {
 				mostrado = false;
 			}
 		} while (!salir && turno < modo.getNumIntentos());
-		if (resultado == null) {
+		if (resultado == null && turno == modo.getNumIntentos()) {
 			if (respondido[0][0] > respondido[1][0])
 				resultado = ResultadoFinal.GANADOR;
 			else if (respondido[0][0] < respondido[1][0])
@@ -230,7 +213,7 @@ public class Partida {
 	 */
 	private ResultadoFinal jugarDificil() {
 		boolean salir = false;
-		int i, j, respondido[][] = new int[2][3];
+		int i, j, respondido[][] = new int[2][];
 		ResultadoFinal resultado = null;
 
 		do {
@@ -311,8 +294,9 @@ public class Partida {
 	/**
 	 * Dibuja los tableros de los jugadores uno al lado del otro.
 	 * @param resultado El resultado de la partida.
+	 * @since 1.0
 	 */
-	private void dibujar(ResultadoFinal resultado) {
+	public void dibujar(ResultadoFinal resultado) {
 		int i, j;
 		String espacios;
 
@@ -325,15 +309,15 @@ public class Partida {
 			jugadores[0].getTablero().dibujar_oculta();
 			System.out.println("\n               ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯");
 		}
-		for (i = 0, j = jugadores[1].getTablero().getCombinaciones().size()
-				- 1; i < jugadores[0].getTablero().getCombinaciones().size() && j >= 0; i++, j--) {
+		for (i = 0, j = jugadores[1].getTablero().getCombinaciones().size()- 1; 
+				i < jugadores[0].getTablero().getCombinaciones().size() && j >= 0; i++, j--) {
 			if (i < 9)
 				espacios = "    ";
-			else if (i < 100)
+			else if (i < 99)
 				espacios = "   ";
 			else
 				espacios = "  ";
-			System.out.printf("%d%s", i + 1, espacios);
+			System.out.printf("%d%s", i+1, espacios);
 			jugadores[0].getTablero().dibujar_linea(i);
 			System.out.print("\t\t");
 			if (j < 9)

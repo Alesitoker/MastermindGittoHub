@@ -1,10 +1,12 @@
-﻿package mastermind;
+package mastermind;
+
+import utilities.Teclado;
+import utilities.Teclado.*;
 
 import static utilities.Constantes.*;
 
 import jugadores.*;
-import utilities.Teclado;
-import utilities.Teclado.*;
+
 import static mastermind.ModoDeJuego.*;
 /**
  * Esta clase permite configurar la partida, mostrando menus.
@@ -62,6 +64,6 @@ public class Menu {
 			jugador[ju] = new Usuario(dificultad);
 			jugador[jm] = new Maquina(dificultad);
 		}
-		return new Partida(dificultad, jugador);
+		return new Partida(dificultad, jugador[0], jugador[1]);
 	}
 }

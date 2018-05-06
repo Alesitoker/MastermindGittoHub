@@ -22,50 +22,44 @@ public class Maquina extends Jugador {
 	}
 	/**
 	 * Elige una combinacion.
-	 * @see #eleccion(byte)
 	 * @since 1.0
 	 */
 	public void elegirCombinacion() {
-		int i, opcion;
-		String color = "";
+		int i, color;
 		Random rnd = new Random();
-		CombinacionRespuesta combinacion = new CombinacionRespuesta(modo.getNumCasillas());
+		CombinacionRespuesta combinacion = new CombinacionRespuesta(modo);
 		
 		for (i = 0; i < modo.getNumCasillas(); i++) {
-			opcion = rnd.nextInt(modo.getNumColores());
-			color = eleccion((byte) opcion);
-			combinacion.addFicha(color, i);
+			color = rnd.nextInt(modo.getNumColores());
+			combinacion.addFicha(color);
 		}
 		tablero.addCombinacion(combinacion);
 	}
 	/**
 	 * Elige la combinacion oculta.
 	 * @return La combinacion oculta elegida.
-	 * @see #eleccion(byte)
 	 * @since 1.0
 	 */
 	public Combinacion elegirCombinacionOculta() {
-		int i = 0, opcion;
-		String color = "";
+		int contador = 0, color;
 		Random rnd = new Random();
-		HashMap<Integer, String> mapa = new HashMap<>();
-		Combinacion combinacion = new Combinacion(modo.getNumCasillas());
+		HashMap<Integer, Boolean> mapa = new HashMap<>();
+		Combinacion combinacion = new Combinacion(modo);
 		
 		do {
-			opcion = rnd.nextInt(modo.getNumColores());
-			color = eleccion((byte) opcion);
+			color = rnd.nextInt(modo.getNumColores());
 			
 			if (modo != ModoDeJuego.DIFICIL) {
-				if (!mapa.containsKey(opcion)) {
-					combinacion.addFicha(color, i);
-					mapa.put(opcion, color);
-					i++;
+				if (!mapa.containsKey(color)) {
+					combinacion.addFicha(color);
+					mapa.put(color, true);
+					contador++;
 				} 
 			} else {
-				combinacion.addFicha(color, i);
-				i++;
+				combinacion.addFicha(color);
+				contador++;
 			}
-		} while (i < modo.getNumCasillas());
+		} while (contador < modo.getNumCasillas());
 		combinacionPropia = combinacion;
 		return combinacion;
 	}

@@ -10,6 +10,7 @@ package interfaces;
 public interface Dibujable {
 	/**
 	 * Dibuja.
+	 * @since 1.0
 	 */
 	public void dibujar();
 }

@@ -26,56 +26,57 @@ public class Usuario extends Jugador {
 	}
 	/**
 	 * Se le muestra un menu al usuario, teniendo que elegir entre una de las opciones hasta formar la combinacion.
-	 * @see #eleccion(byte)
 	 * @since 1.0
 	 */
 	public void elegirCombinacion() {
-		int i;
-		String color = "";
-		CombinacionRespuesta combinacion = new CombinacionRespuesta(modo.getNumCasillas());
+		int i, color;
+		final byte MINNUM = 1;
+		CombinacionRespuesta combinacion = new CombinacionRespuesta(modo);
 
 		System.out.printf("Elige %d colores:\n", modo.getNumCasillas());
-		System.out.printf("1. %s%10$s%9$s  2. %s%10$s%9$s  3. %s%10$s%9$s  4. %s%10$s%9$s\n5. %s%10$s%9$s  6. %s%10$s%9$s  7. %s%10$s%9$s  8. %s%10$s%9$s\n", 
-				ROJO, CELESTE, AMARILLO, COLORCARNE, AZUL, VIOLET, LIGHT_GREEN, BROWN, RESET, figura);
+		for (i = 0; i < modo.getNumColores(); i++) {
+			System.out.printf("%d. %s%s%s ", i+1, Casilla.darColor(i), FIGURA, RESET);
+			if (i == (modo.getNumColores()/2)-1)
+				System.out.println();
+		}
+		System.out.println();
 
 		for (i = 0; i < modo.getNumCasillas(); i++) {
-			byte opcion;
-			final byte MINNUM = 1;
-			opcion = Teclado.rango(MINNUM, (byte) modo.getNumColores(), Rango.AMBOS_INCLUIDOS, Tipo.BYTE);
-			color = eleccion((byte) (opcion - 1));
-			combinacion.addFicha(color, i);
+			color = Teclado.rango(MINNUM, (byte) modo.getNumColores(), Rango.AMBOS_INCLUIDOS, Tipo.BYTE);
+			combinacion.addFicha(color - 1);
 		}
 		tablero.addCombinacion(combinacion);
 	}
 	/**
 	 * Se le muestra un menu al usuario, teniendo que elegir entre una de las opciones hasta formar la combinacion oculta.
 	 * @return La combinacion oculta elegida.
-	 * @see #eleccion(byte)
 	 * @since 1.0
 	 */
 	public Combinacion elegirCombinacionOculta() {
-		int i = 0;
-		byte opcion;
+		int i = 0, contador = 0, color;
 		final byte MINNUM = 1;
-		String color = "";
-		Combinacion combinacion = new Combinacion(modo.getNumCasillas());
-		HashMap<String, Integer> mapa = new HashMap<>();
+		Combinacion combinacion = new Combinacion(modo);
+		HashMap<Integer, Boolean> mapa = new HashMap<>();
 
 		System.out.printf("Elige %d colores:\n", modo.getNumCasillas());
-		System.out.printf("1. %s%10$s%9$s  2. %s%10$s%9$s  3. %s%10$s%9$s  4. %s%10$s%9$s\n5. %s%10$s%9$s  6. %s%10$s%9$s  7. %s%10$s%9$s  8. %s%10$s%9$s\n", 
-				ROJO, CELESTE, AMARILLO, COLORCARNE, AZUL, VIOLET, LIGHT_GREEN, BROWN, RESET, figura);
+		for (i = 0; i < modo.getNumColores(); i++) {
+			System.out.printf("%d. %s%s%s  ", i+1, Casilla.darColor(i), FIGURA, RESET);
+			if (i == (modo.getNumColores()/2)-1)
+				System.out.println();
+		}
+		System.out.println();
 
 		do {
-			opcion = Teclado.rango(MINNUM, (byte) modo.getNumColores(), Rango.AMBOS_INCLUIDOS, Tipo.BYTE);
-			color = eleccion((byte) (opcion - 1));
+			color = Teclado.rango(MINNUM, (byte) modo.getNumColores(), Rango.AMBOS_INCLUIDOS, Tipo.BYTE);
+			color -= 1;
 			if (!mapa.containsKey(color)) {
-				combinacion.addFicha(color, i);
-				mapa.put(color, i);
-				i++;
+				combinacion.addFicha(color);
+				mapa.put(color, true);
+				contador++;
 			} else {
 				System.out.println("No puedes repetir colores.");
 			}
-		} while (i < modo.getNumCasillas());
+		} while (contador < modo.getNumCasillas());
 		combinacionPropia = combinacion;
 		return combinacion;
 	}
@@ -88,9 +89,8 @@ public class Usuario extends Jugador {
 	 */
 	public void indicarRespuesta(CombinacionRespuesta combinacionAdversario) {
 		byte numPosicionCorrecta, numPosicionIncorrecta;
-		int respuestaCorrecta[] = null;
+		int respuestaCorrecta[] = comprobarRespuesta(combinacionAdversario);
 		
-		respuestaCorrecta = comprobarRespuesta(combinacionAdversario);
 		do {
 			System.out.println("Introduce el numero de fichas colocadas en posicion correcta:");
 			numPosicionCorrecta = Teclado.leerNumeros(Tipo.BYTE);

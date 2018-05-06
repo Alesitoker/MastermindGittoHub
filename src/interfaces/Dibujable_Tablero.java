@@ -7,10 +7,20 @@ package interfaces;
  * @since 1.0
  *
  */
-public interface Dibujable_Tablero {
+public interface Dibujable_Tablero extends Dibujable {
+	/**
+	 * Dibuja la combinacion oculta.
+	 * @since 1.0
+	 */
+	public void dibujar_oculta();
+	/**
+	 * Dibuja el tablero sin su combinacion oculta.
+	 * @since 1.0
+	 */
+	public void dibujar_noOculta();
 	/**
 	 * Dibuja una linea del tablero.
-	 * @param Linea a dibujar.
+	 * @param linea La linea que se va a dibujar.
 	 * @since 1.0
 	 */
 	public void dibujar_linea(int linea); // Esto dibuja una linea del tablero.

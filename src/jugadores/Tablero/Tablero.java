@@ -1,10 +1,11 @@
 package jugadores.Tablero;
 
+import static mastermind.ModoDeJuego.*;
+
 import java.util.LinkedList;
 
-import interfaces.*;
+import interfaces.Dibujable_Tablero;
 import mastermind.*;
-import static mastermind.ModoDeJuego.*;
 /**
  * Esta clase contiene las combinaciones del jugador.
  * 
@@ -13,7 +14,7 @@ import static mastermind.ModoDeJuego.*;
  * @since 1.0
  *
  */
-public class Tablero implements Dibujable, Dibujable_Tablero {
+public class Tablero implements Dibujable_Tablero {
 	/**
 	 * Combinacion oculta del jugador contrario.
 	 */
