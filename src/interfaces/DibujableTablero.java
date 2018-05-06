@@ -7,7 +7,7 @@ package interfaces;
  * @since 1.0
  *
  */
-public interface Dibujable_Tablero extends Dibujable {
+public interface DibujableTablero extends Dibujable {
 	/**
 	 * Dibuja la combinacion oculta.
 	 * @since 1.0

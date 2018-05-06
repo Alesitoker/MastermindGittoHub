@@ -4,7 +4,7 @@ import static mastermind.ModoDeJuego.*;
 
 import java.util.LinkedList;
 
-import interfaces.Dibujable_Tablero;
+import interfaces.DibujableTablero;
 import mastermind.*;
 /**
  * Esta clase contiene las combinaciones del jugador.
@@ -14,7 +14,7 @@ import mastermind.*;
  * @since 1.0
  *
  */
-public class Tablero implements Dibujable_Tablero {
+public class Tablero implements DibujableTablero {
 	/**
 	 * Combinacion oculta del jugador contrario.
 	 */
@@ -47,16 +47,25 @@ public class Tablero implements Dibujable_Tablero {
 	 * @return La combinacion oculta.
 	 * @since 1.0
 	 */
-	public Combinacion getCombinacionOculta() {
-		return combinacionOculta;
-	}
+//	public Combinacion getCombinacionOculta() {
+//		return combinacionOculta;
+//	}
 	/**
-	 * Devuelve las combinaciones con su respuesta.
-	 * @return Las combinaciones con su respuesta
+	 * Devuelve si el atributo combinaciones esta vacio o no.
+	 * @return true: esta vacio.
+	 * 		   false: contiene elementos.
 	 * @since 1.0
 	 */
-	public LinkedList<CombinacionRespuesta> getCombinaciones() {
-		return combinaciones;
+	public boolean noCombinaciones() {
+		return combinaciones.isEmpty();
+	}
+	/**
+	 * Devuelve el numero de combinaciones del tablero.
+	 * @return El numero de combinaciones que contiene el tablero.
+	 * @since 1.0
+	 */
+	public int combinacionesSize() {
+		return combinaciones.size();
 	}
 	/**
 	 * Añade una combinacion con respuesta al tablero.
@@ -87,7 +96,7 @@ public class Tablero implements Dibujable_Tablero {
 		if (modo == MEDIO) {
 			System.out.println("\n            ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯");
 		} else {
-			System.out.println("\n            ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯");
+			System.out.println("\n          ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯");
 		}
 		for (i = 0; i < combinaciones.size(); i++) {
 			if (i >= 9)

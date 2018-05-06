@@ -7,7 +7,7 @@ package interfaces;
  * @since 1.0
  *
  */
-public interface Dibujable_Partida {
+public interface DibujablePartida {
 	/**
 	 * Enum de los resultados de la partida.
 	 * @since 1.0

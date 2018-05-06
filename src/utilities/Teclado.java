@@ -427,4 +427,192 @@ public class Teclado {
 		} while(noValido);
 		return numero;
 	}
+	// Rango con mensaje.
+	public static <Y> Y rango(Y numeroInferior, Y numeroSuperior, Rango rango, Tipo tipo, String mensaje) {
+		Y numero;
+		boolean noValido, comparacion = false;
+		do {
+			numero = leerNumeros(tipo);
+			noValido = true;
+			switch (rango) {
+				case AMBOS_INCLUIDOS:
+					switch (tipo) {
+						case BYTE:
+							if ((Byte)numeroInferior >= (Byte)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Byte)numero >= (Byte)numeroInferior && (Byte)numeroSuperior >= (Byte)numero;
+							break;
+						case SHORT:
+							if ((Short)numeroInferior >= (Short)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Short)numero >= (Short)numeroInferior && (Short)numeroSuperior >= (Short)numero;
+							break;
+						case INT:
+							if ((Integer)numeroInferior >= (Integer)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Integer)numero >= (Integer)numeroInferior && (Integer)numeroSuperior >= (Integer)numero;
+							break;
+						case LONG:
+							if ((Long)numeroInferior >= (Long)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Long)numero >= (Long)numeroInferior && (Long)numeroSuperior >= (Long)numero;
+							break;
+						case FLOAT:
+							if ((Float)numeroInferior >= (Float)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Float)numero >= (Float)numeroInferior && (Float)numeroSuperior >= (Float)numero;
+							break;
+						case DOUBLE:
+							if ((Double)numeroInferior >= (Double)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Double)numero >= (Double)numeroInferior && (Double)numeroSuperior >= (Double)numero;
+							break;
+					}
+					if (comparacion)
+						noValido = false;
+					else
+						System.out.printf("%s\n", mensaje);
+					break;
+				case AMBOS_EXCLUIDOS:
+					switch (tipo) {
+						case BYTE:
+							if ((Byte)numeroInferior >= (Byte)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Byte)numero > (Byte)numeroInferior && (Byte)numeroSuperior > (Byte)numero;
+							break;
+						case SHORT:
+							if ((Short)numeroInferior >= (Short)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Short)numero > (Short)numeroInferior && (Short)numeroSuperior > (Short)numero;
+							break;
+						case INT:
+							if ((Integer)numeroInferior >= (Integer)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Integer)numero > (Integer)numeroInferior && (Integer)numeroSuperior > (Integer)numero;
+							break;
+						case LONG:
+							if ((Long)numeroInferior >= (Long)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Long)numero > (Long)numeroInferior && (Long)numeroSuperior > (Long)numero;
+							break;
+						case FLOAT:
+							if ((Float)numeroInferior >= (Float)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Float)numero > (Float)numeroInferior && (Float)numeroSuperior > (Float)numero;
+							break;
+						case DOUBLE:
+							if ((Double)numeroInferior >= (Double)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Double)numero > (Double)numeroInferior && (Double)numeroSuperior > (Double)numero;
+							break;
+					}
+					if (comparacion)
+						noValido = false;
+					else
+						System.out.printf("%s\n", mensaje);
+					break;
+				case MIN_INCLUIDO:
+					switch (tipo) {
+						case BYTE:
+							if ((Byte)numeroInferior >= (Byte)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Byte)numero >= (Byte)numeroInferior && (Byte)numeroSuperior > (Byte)numero;
+							break;
+						case SHORT:
+							if ((Short)numeroInferior >= (Short)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Short)numero >= (Short)numeroInferior && (Short)numeroSuperior > (Short)numero;
+							break;
+						case INT:
+							if ((Integer)numeroInferior >= (Integer)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Integer)numero >= (Integer)numeroInferior && (Integer)numeroSuperior > (Integer)numero;
+							break;
+						case LONG:
+							if ((Long)numeroInferior >= (Long)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Long)numero >= (Long)numeroInferior && (Long)numeroSuperior > (Long)numero;
+							break;
+						case FLOAT:
+							if ((Float)numeroInferior >= (Float)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Float)numero >= (Float)numeroInferior && (Float)numeroSuperior > (Float)numero;
+							break;
+						case DOUBLE:
+							if ((Double)numeroInferior >= (Double)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Double)numero >= (Double)numeroInferior && (Double)numeroSuperior > (Double)numero;
+							break;
+					}
+					if (comparacion)
+						noValido = false;
+					else
+						System.out.printf("%s\n", mensaje);
+					break;
+				case MAX_INCLUIDO:
+					switch (tipo) {
+						case BYTE:
+							if ((Byte)numeroInferior >= (Byte)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Byte)numero > (Byte)numeroInferior && (Byte)numeroSuperior >= (Byte)numero;
+							break;
+						case SHORT:
+							if ((Short)numeroInferior >= (Short)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Short)numero > (Short)numeroInferior && (Short)numeroSuperior >= (Short)numero;
+							break;
+						case INT:
+							if ((Integer)numeroInferior >= (Integer)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Integer)numero > (Integer)numeroInferior && (Integer)numeroSuperior >= (Integer)numero;
+							break;
+						case LONG:
+							if ((Long)numeroInferior >= (Long)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Long)numero > (Long)numeroInferior && (Long)numeroSuperior >= (Long)numero;
+							break;
+						case FLOAT:
+							if ((Float)numeroInferior >= (Float)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Float)numero > (Float)numeroInferior && (Float)numeroSuperior >= (Float)numero;
+							break;
+						case DOUBLE:
+							if ((Double)numeroInferior >= (Double)numeroSuperior) {
+								throw new IllegalArgumentException("Error, el numero inferior no puede ser mayor o igual al superior");
+							}
+							comparacion = (Double)numero > (Double)numeroInferior && (Double)numeroSuperior >= (Double)numero;
+							break;
+					}
+					if (comparacion)
+						noValido = false;
+					else
+						System.out.printf("%s\n", mensaje);
+					break;
+			}
+		} while(noValido);
+		return numero;
+	}
 }

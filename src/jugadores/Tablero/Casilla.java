@@ -2,7 +2,7 @@ package jugadores.Tablero;
 
 import static utilities.Constantes.*;
 
-import interfaces.Dibujable_Ficha_Respuesta;
+import interfaces.DibujableFichaRespuesta;
 
 /**
  * Esta clase almacena un color.
@@ -12,7 +12,7 @@ import interfaces.Dibujable_Ficha_Respuesta;
  * @since 1.0
  *
  */
-public class Casilla implements Dibujable_Ficha_Respuesta {
+public class Casilla implements DibujableFichaRespuesta {
 	/**
 	 * Almacena los colores posibles de las casillas.
 	 */
@@ -100,7 +100,7 @@ public class Casilla implements Dibujable_Ficha_Respuesta {
 	 * Dibuja una casilla de respuesta.
 	 * @since 1.0
 	 */
-	public void Dibujar_respuesta() {
+	public void DibujarRespuesta() {
 		
 		if (!color.equals("vacio")) {
 			System.out.printf("%s%s%s", color, FIGURARESPUESTA, RESET);

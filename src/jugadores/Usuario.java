@@ -31,6 +31,7 @@ public class Usuario extends Jugador {
 	public void elegirCombinacion() {
 		int i, color;
 		final byte MINNUM = 1;
+		String mensaje = "Debes seleccionar una opcion del menu\nVuelve a elegir:";
 		CombinacionRespuesta combinacion = new CombinacionRespuesta(modo);
 
 		System.out.printf("Elige %d colores:\n", modo.getNumCasillas());
@@ -42,7 +43,7 @@ public class Usuario extends Jugador {
 		System.out.println();
 
 		for (i = 0; i < modo.getNumCasillas(); i++) {
-			color = Teclado.rango(MINNUM, (byte) modo.getNumColores(), Rango.AMBOS_INCLUIDOS, Tipo.BYTE);
+			color = Teclado.rango(MINNUM, (byte) modo.getNumColores(), Rango.AMBOS_INCLUIDOS, Tipo.BYTE, mensaje);
 			combinacion.addFicha(color - 1);
 		}
 		tablero.addCombinacion(combinacion);
@@ -55,10 +56,11 @@ public class Usuario extends Jugador {
 	public Combinacion elegirCombinacionOculta() {
 		int i = 0, contador = 0, color;
 		final byte MINNUM = 1;
+		String mensaje = "Debes seleccionar una opcion del menu\nVuelve a elegir:";
 		Combinacion combinacion = new Combinacion(modo);
 		HashMap<Integer, Boolean> mapa = new HashMap<>();
 
-		System.out.printf("Elige %d colores:\n", modo.getNumCasillas());
+		System.out.printf("Elige %d colores para la combinacion oculta:\n", modo.getNumCasillas());
 		for (i = 0; i < modo.getNumColores(); i++) {
 			System.out.printf("%d. %s%s%s  ", i+1, Casilla.darColor(i), FIGURA, RESET);
 			if (i == (modo.getNumColores()/2)-1)
@@ -67,7 +69,7 @@ public class Usuario extends Jugador {
 		System.out.println();
 
 		do {
-			color = Teclado.rango(MINNUM, (byte) modo.getNumColores(), Rango.AMBOS_INCLUIDOS, Tipo.BYTE);
+			color = Teclado.rango(MINNUM, (byte) modo.getNumColores(), Rango.AMBOS_INCLUIDOS, Tipo.BYTE, mensaje);
 			color -= 1;
 			if (!mapa.containsKey(color)) {
 				combinacion.addFicha(color);

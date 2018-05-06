@@ -79,7 +79,7 @@ public class CombinacionRespuesta extends Combinacion {
 		System.out.print("  ");
 		for (i = 0; i < respuesta.length; i++) {
 			if (respuesta[i] != null) {
-				respuesta[i].Dibujar_respuesta();
+				respuesta[i].DibujarRespuesta();
 				System.out.print(" ");
 			}
 		}

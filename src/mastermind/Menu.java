@@ -30,13 +30,7 @@ public class Menu {
 		Jugador jugador[] = new Jugador[2];
 		int i;
 		
-		System.out.println(VIOLET +
-				"• ▌ ▄ ·.  ▄▄▄· .▄▄ ·▄▄▄▄▄▄▄▄ .▄▄▄  • ▌ ▄ ·. ▪   ▐ ▄ ·▄▄▄▄  \r\n" + 
-				"·██ ▐███▪▐█ ▀█ ▐█ ▀.•██  ▀▄.▀·▀▄ █··██ ▐███▪██ •█▌▐███▪ ██ \r\n" + 
-				"▐█ ▌▐▌▐█·▄█▀▀█ ▄▀▀▀█▄▐█.▪▐▀▀▪▄▐▀▀▄ ▐█ ▌▐▌▐█·▐█·▐█▐▐▌▐█· ▐█▌\r\n" + 
-				"██ ██▌▐█▌▐█ ▪▐▌▐█▄▪▐█▐█▌·▐█▄▄▌▐█•█▌██ ██▌▐█▌▐█▌██▐█▌██. ██ \r\n" + 
-				"▀▀  █▪▀▀▀ ▀  ▀  ▀▀▀▀ ▀▀▀  ▀▀▀ .▀  ▀▀▀  █▪▀▀▀▀▀▀▀▀ █▪▀▀▀▀▀• \r\n" + 
-				"" + RESET);
+		
 		System.out.println("Elige el modo de juego:");
 		System.out.printf("\t%s1. Facil%s\n\t%s2. Medio%2$s\n\t%s3. Dificil%2$s\n", LIGHT_GREEN, RESET, AMARILLO, ROJO);
 		opcion = Teclado.rango(MINNUM, MAXNUM, Rango.AMBOS_INCLUIDOS, Tipo.BYTE);

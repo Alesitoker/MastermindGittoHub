@@ -3,7 +3,7 @@ package mastermind;
 import utilities.*;
 import utilities.Teclado.*;
 import jugadores.*;
-import interfaces.Dibujable_Partida;
+import interfaces.DibujablePartida;
 
 import static mastermind.ModoDeJuego.*;
 import static utilities.Constantes.*;
@@ -16,7 +16,7 @@ import static utilities.Constantes.*;
  * @since 1.0
  *
  */
-public class Partida implements Dibujable_Partida{
+public class Partida implements DibujablePartida{
 	/**
 	 * Los jugadores que van a jugar.
 	 */
@@ -85,7 +85,7 @@ public class Partida implements Dibujable_Partida{
 						elegido = true;
 						break;
 					case 2:
-						if (!jugadores[0].getTablero().getCombinaciones().isEmpty() && !mostrado) {
+						if (!jugadores[0].getTablero().noCombinaciones() && !mostrado) {
 							jugadores[0].getTablero().dibujar_noOculta();;
 							System.out.printf("Nº Intentos: %d/%d\n\n", turno, modo.getNumIntentos());
 							mostrado = true;
@@ -97,6 +97,7 @@ public class Partida implements Dibujable_Partida{
 						}
 						break;
 					case 3:
+						resultado = ResultadoFinal.PERDEDOR;
 						salir = true;
 						break;
 				}
@@ -142,7 +143,7 @@ public class Partida implements Dibujable_Partida{
 		ResultadoFinal resultado = null;
 
 		do {
-			System.out.println("Selecciona una opcion:\n\t1. Elegir colores\n\t2. Mostrar tablero\n\t3. Rendirse");
+			System.out.println("Selecciona una opcion:\n\t1. Elegir colores\n\t2. Mostrar tableros\n\t3. Rendirse");
 			opcion = Teclado.rango(MINNUM, MAXNUM, Rango.AMBOS_INCLUIDOS, Tipo.BYTE);
 			switch (opcion) {
 				case 1:
@@ -157,7 +158,7 @@ public class Partida implements Dibujable_Partida{
 					elegido = true;
 					break;
 				case 2:
-					if (!jugadores[0].getTablero().getCombinaciones().isEmpty() && !mostrado) {
+					if (!jugadores[0].getTablero().noCombinaciones() && !mostrado) {
 						dibujar(resultado);
 						mostrado = true;
 					} else if (mostrado) {
@@ -168,6 +169,7 @@ public class Partida implements Dibujable_Partida{
 					}
 					break;
 				case 3:
+					resultado = ResultadoFinal.PERDEDOR;
 					salir = true;
 					break;
 			}
@@ -208,7 +210,7 @@ public class Partida implements Dibujable_Partida{
 	}
 	/**
 	 * Juega una partida en modo dificil.
-	 * @return El resultado de la partida.
+	 * @return El resultado de la partida. 
 	 * @since 1.0
 	 */
 	private ResultadoFinal jugarDificil() {
@@ -236,7 +238,12 @@ public class Partida implements Dibujable_Partida{
 				resultado = ResultadoFinal.GANADORMAQUINA;
 				salir = true;
 			}
-		} while (!salir);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		} while (!salir || turno == 10);
 		return resultado;
 	}
 	/**
@@ -309,8 +316,8 @@ public class Partida implements Dibujable_Partida{
 			jugadores[0].getTablero().dibujar_oculta();
 			System.out.println("\n               ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯");
 		}
-		for (i = 0, j = jugadores[1].getTablero().getCombinaciones().size()- 1; 
-				i < jugadores[0].getTablero().getCombinaciones().size() && j >= 0; i++, j--) {
+		for (i = 0, j = jugadores[1].getTablero().combinacionesSize() - 1; 
+				i < jugadores[0].getTablero().combinacionesSize() && j >= 0; i++, j--) {
 			if (i < 9)
 				espacios = "    ";
 			else if (i < 99)
@@ -326,9 +333,16 @@ public class Partida implements Dibujable_Partida{
 				espacios = "   ";
 			else
 				espacios = "  ";
-			System.out.printf("%d%s", jugadores[1].getTablero().getCombinaciones().size() - i, espacios);
+			System.out.printf("%d%s", jugadores[1].getTablero().combinacionesSize() - i, espacios);
 			jugadores[1].getTablero().dibujar_linea(j);
 			System.out.println();
+			if (modo == DIFICIL) {
+				try {
+					Thread.sleep(3000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		if (modo == DIFICIL) {
 			System.out.print("\t\t\t\t\t\t\t               ");
